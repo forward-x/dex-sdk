@@ -1,0 +1,45 @@
+{
+  "name": "@fwx/dex-sdk",
+  "license": "MIT",
+  "version": "4.3.0",
+  "description": "🛠 Fork of an SDK for building FWX DEX on top of Uniswap V2",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": "https://github.com/forward-x/fwx-dex-sdk.git",
+  "keywords": [
+    "uniswap",
+    "ethereum"
+  ],
+  "module": "dist/v2-sdk.esm.js",
+  "scripts": {
+    "lint": "tsdx lint src test",
+    "build": "tsdx build",
+    "start": "tsdx watch",
+    "test": "tsdx test",
+    "prepublishOnly": "tsdx build"
+  },
+  "dependencies": {
+    "@ethersproject/address": "^5.7.0",
+    "@ethersproject/solidity": "^5.7.0",
+    "@uniswap/sdk-core": "^4.2.1",
+    "tiny-invariant": "^1.3.3",
+    "tiny-warning": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/big.js": "^4.0.5",
+    "@types/jest": "^24.9.1",
+    "@uniswap/v2-core": "^1.0.1",
+    "tsdx": "^0.14.1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true
+  }
+}
