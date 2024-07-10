@@ -9,8 +9,6 @@ import {
   _1000,
   _997,
   BASIS_POINTS,
-  FACTORY_ADDRESS,
-  FACTORY_ADDRESS_MAP,
   FIVE,
   INIT_CODE_HASH,
   MINIMUM_LIQUIDITY,
@@ -40,19 +38,24 @@ export const computePairAddress = ({
 export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: [CurrencyAmount<Token>, CurrencyAmount<Token>]
+  private readonly factoryAddress: string
 
-  public static getAddress(tokenA: Token, tokenB: Token): string {
-    const factoryAddress = FACTORY_ADDRESS_MAP[tokenA.chainId] ?? FACTORY_ADDRESS
+  public static getAddress(tokenA: Token, tokenB: Token, factoryAddress: string): string {
     return computePairAddress({ factoryAddress, tokenA, tokenB })
   }
 
-  public constructor(currencyAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>) {
+  public constructor(
+    currencyAmountA: CurrencyAmount<Token>,
+    tokenAmountB: CurrencyAmount<Token>,
+    factoryAddress: string
+  ) {
     const tokenAmounts = currencyAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [currencyAmountA, tokenAmountB]
       : [tokenAmountB, currencyAmountA]
+    this.factoryAddress = factoryAddress
     this.liquidityToken = new Token(
       tokenAmounts[0].currency.chainId,
-      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
+      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency, this.factoryAddress),
       18,
       'UNI-V2',
       'Uniswap V2'
@@ -225,7 +228,7 @@ export class Pair {
 
     return [
       outputAmountAfterTax,
-      new Pair(inputReserve.add(inputAmountAfterTax), outputReserve.subtract(outputAmountAfterTax))
+      new Pair(inputReserve.add(inputAmountAfterTax), outputReserve.subtract(outputAmountAfterTax), this.factoryAddress)
     ]
   }
 
@@ -310,7 +313,10 @@ export class Pair {
           JSBI.add(inputAmount.divide(percentAfterSellFees).quotient, ONE) // add 1 for rounding up
         )
       : inputAmount
-    return [inputAmountBeforeTax, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
+    return [
+      inputAmountBeforeTax,
+      new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount), this.factoryAddress)
+    ]
   }
 
   public getLiquidityMinted(
