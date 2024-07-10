@@ -8,7 +8,7 @@
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/forward-x/fwx-dex-sdk.git",
+  "repository": "https://github.com/forward-x/dex-sdk.git",
   "keywords": [
     "uniswap",
     "ethereum"
