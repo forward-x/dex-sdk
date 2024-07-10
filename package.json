@@ -1,7 +1,7 @@
 {
   "name": "@fwx/dex-sdk",
   "license": "MIT",
-  "version": "4.3.0",
+  "version": "0.0.1",
   "description": "🛠 Fork of an SDK for building FWX DEX on top of Uniswap V2",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
