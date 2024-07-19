@@ -13,7 +13,7 @@
     "uniswap",
     "ethereum"
   ],
-  "module": "dist/v2-sdk.esm.js",
+  "module": "dist/dex-sdk.esm.js",
   "scripts": {
     "lint": "tsdx lint src test",
     "build": "tsdx build",
